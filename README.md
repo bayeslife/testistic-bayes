@@ -2,13 +2,22 @@
 
 This module is a library to express bayesian logic
 
+# Conceptual Overview
+
+A TestRelationship is a bayesian relationship between the quality of a tested service and test results which are used to measure the quality.
+
+For any one service there can be multiple tests which measure the service quality in different ways.
+We can update the plausibility of the service quality by considering evidence from multiple tests.  The set of TestRelationships and the current test results will be known as a TestModelState
+
 # Usage
 
-This module exports a Relationship factory which builds bayesian Relationships.
+## TestRelationship
+
+This module exports a TestRelationship factory which builds bayesian TestRelationships.
 
 ```
 import Bayes from 'testistc-bayes'
-var relationshipFactory = Bayes.Relationship
+var relationshipFactory = Bayes.TestRelationship
 var relationship = relationshipFactory.create({
       QS: 18,
       QF: 2,
@@ -23,7 +32,7 @@ The factory create method takes values which express the intersection values bet
 - PS - represents the expectation of poor qualty and a successful test
 - PS - represents the expectation of poor quality and a failing test
 
-The Relationship data structure represents
+The TestRelationship data structure represents
 ```
 { 
     //intersections
@@ -33,8 +42,25 @@ The Relationship data structure represents
     Q: 20,P: 80,S: 40,F: 60,                                                                                                 
 
     //aggregations as probabilities           
-    pQ: 0.2, pP: 0.8, pS: 0.4, pF: 0.6,                                                                                          
-    //conditional probabilities                                                                                             
+    pQ: 0.2, pP: 0.8, pS: 0.4, pF: 0.6
+
+    //conditional probabilities
     pQ_S: 0.45, pP_S: 0.55, pQ_F: 0.033, pP_F: 0.97  
 }
+```
+
+## TestModelState 
+
+This module exports a TestModelState factory.
+
+```
+import Bayes from 'testistc-bayes'
+var stateFactory = Bayes.TestModelState
+var state = relationshipFactory.create([{
+    id: 'TestRelationship1',
+      QS: 18,
+      QF: 2,
+      PS: 22,
+      PF: 58
+    }])
 ```

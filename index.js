@@ -1,23 +1,15 @@
 
 import { 
-    Relationship, 
-    updateTestQualityForPositiveTestRun, 
-    updateServiceQualityForPositiveTestRun, 
-    updateTestQualityForNegativeTestRun, 
-    updateServiceQualityForNegativeTestRun 
-} from './src/bayesrelation.js'
+    TestRelationship
+} from './src/testrelationship.js'
+
+console.log(TestRelationship)
 
 import { 
-    Population 
-} from './src/bayespopulation.js'
+    TestModelState 
+} from './src/testmodelstate.js'
 
 export default {
-    Relationship,
-    Population,
-    Rules: {
-        updateTestQualityForPositiveTestRun,
-        updateServiceQualityForPositiveTestRun,
-        updateTestQualityForNegativeTestRun,
-        updateServiceQualityForNegativeTestRun
-    }
+    TestRelationship,
+    TestModelState
 }

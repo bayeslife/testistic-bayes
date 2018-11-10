@@ -28,7 +28,7 @@ function validate () {
     return this.posterior
  }
 
-export var Population = {
+export var TestModelState = {
   create: function (relationships) {
     assert(relationships.length > 0, 'There should be at least one relationship')
     var prior = {

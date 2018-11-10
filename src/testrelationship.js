@@ -2,7 +2,7 @@
 
 import assert from 'assert'
 
-export function updateTestQualityForPositiveTestRun (
+function updateTestQualityForPositiveTestRun (
   pQ /* prior estimate that test is quality test */,
   pS_Q /* probability of positive testrun given a quality test */,
   pS /* probability of a positive testrun given a quality or not quality test */
@@ -10,7 +10,7 @@ export function updateTestQualityForPositiveTestRun (
   return pQ * pS_Q / pS
 }
 
-export function updateTestQualityForNegativeTestRun (
+function updateTestQualityForNegativeTestRun (
   pQ/* prior estimate that test is quality test */,
   pF_Q/* probablity of negative testrun given a quality test */,
   pF/* probability of a negative testrun given a quality or not quality test */
@@ -18,7 +18,7 @@ export function updateTestQualityForNegativeTestRun (
   return pQ * pF_Q / pF
 }
 
-export function updateServiceQualityForPositiveTestRun (
+function updateServiceQualityForPositiveTestRun (
   pQ/* prior estimate that service is quality service */,
   pS_Q/* probablity of positive testrun given a quality service */,
   pS/* probability of a positive testrun given a quality or not quality service */
@@ -26,7 +26,7 @@ export function updateServiceQualityForPositiveTestRun (
   return pQ * pS_Q / pS
 }
 
-export function updateServiceQualityForNegativeTestRun (
+function updateServiceQualityForNegativeTestRun (
   pQ/* prior estimate that test is quality service */,
   pS_Q/* probablity of negative testrun given a quality service */,
   pd/* probability of a negative testrun given a quality or not quality service */
@@ -92,7 +92,7 @@ function validate () {
   }
 }
 
-export var Relationship = {
+export var TestRelationship = {
   create: function (relationship) {
      var id = relationship.id
      var QS = relationship.QS

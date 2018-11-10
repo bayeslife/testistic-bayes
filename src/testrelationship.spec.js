@@ -4,7 +4,7 @@ import { assert } from 'chai'
 import { fail } from 'assert'
 
 describe('Given a relationship factory', function () {
-  var relationshipFactory = Bayes.Relationship
+  var relationshipFactory = Bayes.TestRelationship
 
   describe('When an invalid relationship is created', function () {
     it('There is an exception thrown', function () {
@@ -124,7 +124,7 @@ describe('Given a relationship factory', function () {
   })
 })
 
-describe('Given engine for bayes rules', function () {
+describe.skip('Given engine for bayes rules', function () {
   var rules = Bayes.Rules
   describe('When the posterior test quality is calculated after a postive test run', function () {
     it(`Then the posterior is calculated correctly`, function () {

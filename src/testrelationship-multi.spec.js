@@ -1,10 +1,10 @@
-import Engine from '../index.js'
+import Bayes from '../index.js'
 
 import { assert } from 'chai'
 import { fail } from 'assert'
 
 describe('Given a relationship factory', function () {
-  var relationshipFactory = Engine.Relationship
+  var relationshipFactory = Bayes.TestRelationship
 
   var scenarios = [{
     relationships: [{

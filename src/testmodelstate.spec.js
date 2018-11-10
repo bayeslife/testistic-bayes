@@ -4,8 +4,8 @@ import { assert } from 'chai'
 import { fail } from 'assert'
 
 describe('Given some factories', function () {
-  var relationshipFactory = Bayes.Relationship
-  var populationFactory = Bayes.Population
+  var relationshipFactory = Bayes.TestRelationship
+  var populationFactory = Bayes.TestModelState
 
   var scenarios = [{
     relationships: [{
