@@ -34,19 +34,73 @@ export function updateServiceQualityForNegativeTestRun (
   return pQ * pS_Q / pd
 }
 
-function _validate (relationship) {
-  // console.log(relationship)
-  return (relationship.QS + relationship.QF + relationship.PS + relationship.PF) === 100
+function validate () {
+  return (this.QS + this.QF + this.PS + this.PF) === 100
  }
+
+ function getAggregates () {
+  return {
+    Q: this.Q,
+    P: this.P,
+    F: this.F,
+    S: this.S
+  }
+ }
+
+ function getProbabilties () {
+  return {
+    pQ: this.pQ,
+    pP: this.pP,
+    pS: this.pS,
+    pF: this.pF
+  }
+ }
+
+ function getConditionalProbabilties () {
+  return {
+    pQ_S: this.pQ_S,
+    pP_S: this.pP_S,
+    pQ_F: this.pQ_F,
+    pP_F: this.pP_F
+  }
+ }
+
+ function getIntersections () {
+  return {
+    QS: this.QS,
+    PS: this.PS,
+    QF: this.QF,
+    PF: this.PF
+  }
+ }
+
+ function probabilityGiven (prior, evidence) {
+  assert(prior.pQ, 'No prior probablity of Quality defined')
+  assert(prior.pP, 'No prior probablity of Poor quality defined')
+  if (evidence.S) {
+    // console.log(`Prior: ${prior.pQ}, QS:${this.QS}, Q:${this.Q}`)
+    return {
+      pQ: Math.floor(100 * prior.pQ * this.QS / this.Q) / 100,
+      pP: Math.floor(100 * prior.pP * this.PS / this.P) / 100
+    }
+  } else {
+    // console.log(`Prior: ${prior.pQ}, QF:${this.QF}, Q:${this.Q}`)
+    return {
+      pQ: Math.floor(100 * prior.pQ * this.QF / this.Q) / 100,
+      pP: Math.floor(100 * prior.pP * this.PF / this.P) / 100
+    }
+  }
+}
 
 export var Relationship = {
   create: function (relationship) {
-     assert(_validate(relationship), 'Bayesian relationship is not valid as intersections dont sum to 100')
+     var id = relationship.id
      var QS = relationship.QS
      var PS = relationship.PS
      var QF = relationship.QF
      var PF = relationship.PF
      var result = {
+       id,
        QS,
        PS,
        QF,
@@ -63,59 +117,14 @@ export var Relationship = {
        pP_S: PS / (QS + PS),
        pQ_F: QF / (QF + PF),
        pP_F: PF / (QF + PF),
-       validate: function () {
-         return _validate(this)
-       },
-       getAggregates: function () {
-        return {
-          Q: this.Q,
-          P: this.P,
-          F: this.F,
-          S: this.S
-        }
-       },
-       getProbabilties: function () {
-        return {
-          pQ: this.pQ,
-          pP: this.pP,
-          pS: this.pS,
-          pF: this.pF
-        }
-       },
-       getConditionalProbabilties: function () {
-        return {
-          pQ_S: this.pQ_S,
-          pP_S: this.pP_S,
-          pQ_F: this.pQ_F,
-          pP_F: this.pP_F
-        }
-       },
-       getIntersections: function () {
-        return {
-          QS: this.QS,
-          PS: this.PS,
-          QF: this.QF,
-          PF: this.PF
-        }
-       },
-       probabilityGiven: function (prior, evidence) {
-          assert(prior.pQ, 'No prior probablity of Quality defined')
-          assert(prior.pP, 'No prior probablity of Poor quality defined')
-          if (evidence.S) {
-            // console.log(`Prior: ${prior.pQ}, QS:${this.QS}, Q:${this.Q}`)
-            return {
-              pQ: Math.floor(100 * prior.pQ * this.QS / this.Q) / 100,
-              pP: Math.floor(100 * prior.pP * this.PS / this.P) / 100
-            }
-          } else {
-            // console.log(`Prior: ${prior.pQ}, QF:${this.QF}, Q:${this.Q}`)
-            return {
-              pQ: Math.floor(100 * prior.pQ * this.QF / this.Q) / 100,
-              pP: Math.floor(100 * prior.pP * this.PF / this.P) / 100
-            }
-          }
-       }
-     }
+       validate,
+       getAggregates,
+       getProbabilties,
+       getConditionalProbabilties,
+       getIntersections,
+       probabilityGiven
+      }
+      assert(result.validate(), 'Bayesian relationship is not valid as intersections dont sum to 100')
      return result
    }
 }

@@ -77,7 +77,6 @@ describe('Given a relationship factory', function () {
   scenarios.forEach((scenario) => {
     describe('When a relationship is created', function () {
       var relationship = relationshipFactory.create(scenario.relationship)
-      console.log(relationship)
       it(`Then probabilities are correct`, function () {
         var derivedProbabilities = relationship.getProbabilties()
         assert.equal(scenario.expect.probabilities.pQ, derivedProbabilities.pQ)

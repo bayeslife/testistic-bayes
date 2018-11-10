@@ -5,11 +5,15 @@ import {
     updateServiceQualityForPositiveTestRun, 
     updateTestQualityForNegativeTestRun, 
     updateServiceQualityForNegativeTestRun 
-} from './src/bayesrule.js'
+} from './src/bayesrelation.js'
 
+import { 
+    Population 
+} from './src/bayespopulation.js'
 
 export default {
     Relationship,
+    Population,
     Rules: {
         updateTestQualityForPositiveTestRun,
         updateServiceQualityForPositiveTestRun,
