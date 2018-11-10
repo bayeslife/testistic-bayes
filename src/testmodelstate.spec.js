@@ -5,7 +5,7 @@ import { fail } from 'assert'
 
 describe('Given some factories', function () {
   var relationshipFactory = Bayes.TestRelationship
-  var populationFactory = Bayes.TestModelState
+  var modelstateFactory = Bayes.TestModelState
 
   var scenarios = [{
     relationships: [{
@@ -45,17 +45,17 @@ describe('Given some factories', function () {
   scenarios.forEach((scenario) => {
     describe('When relationships are created', function () {
       var relationships = scenario.relationships.map((r) => relationshipFactory.create(r))
-      var population = populationFactory.create(relationships)
+      var modelstate = modelstateFactory.create(relationships)
       it(`Then`, function () {
-        var p = population.getProbabilities()
+        var p = modelstate.getProbabilities()
         assert.equal(scenario.expect.pQ, p.pQ)
         assert.equal(scenario.expect.pP, p.pP)
 
-        p = population.updateGiven(scenario.testresult[0])
+        p = modelstate.updateGiven(scenario.testresult[0])
         assert.equal(scenario.testresult[0].expect.pQ, p.pQ)
         assert.equal(scenario.testresult[0].expect.pP, p.pP)
 
-        p = population.updateGiven(scenario.testresult[1])
+        p = modelstate.updateGiven(scenario.testresult[1])
         assert.equal(scenario.testresult[1].expect.pQ, p.pQ)
         assert.equal(scenario.testresult[1].expect.pP, p.pP)
       })

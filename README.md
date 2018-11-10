@@ -1,6 +1,6 @@
 # Testistic  Bayes
 
-This module is a library to express bayesian logic
+This module is a library to express bayesian logic in the context of measuring the quality of a service through tests and test results.
 
 # Conceptual Overview
 
@@ -63,4 +63,18 @@ var state = relationshipFactory.create([{
       PS: 22,
       PF: 58
     }])
+```
+
+You are then able to ask for the probabilities of service quality
+
+```
+var p = state.getProbabilities()
+```
+
+As test results become known we ask for this new information to be included in the consider
+```
+p = state.updateGiven({ 
+    id: 'TestRelationship1',
+    S: true
+})
 ```
