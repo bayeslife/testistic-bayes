@@ -74,56 +74,81 @@ function validate () {
   }
  }
 
+ function getIntersectionProbabilities () {
+  return {
+    pQS: this.pQS,
+    pPS: this.pPS,
+    pQF: this.pQF,
+    pPF: this.pPF
+  }
+ }
+
  function probabilityGiven (prior, evidence) {
   assert(prior.pQ, 'No prior probablity of Quality defined')
   assert(prior.pP, 'No prior probablity of Poor quality defined')
+  var pQ, pP
   if (evidence.S) {
     // console.log(`Prior: ${prior.pQ}, QS:${this.QS}, Q:${this.Q}`)
+    pQ = prior.pQ * this.QS / this.Q
+    pP = prior.pP * this.PS / this.P
     return {
-      pQ: Math.floor(100 * prior.pQ * this.QS / this.Q) / 100,
-      pP: Math.floor(100 * prior.pP * this.PS / this.P) / 100
+      Q: Math.floor(100 * pQ / (pQ + pP)),
+      P: Math.floor(100 * pP / (pQ + pP)),
+      pQ: Math.floor(100 * pQ / (pQ + pP)) / 100,
+      pP: Math.floor(100 * pP / (pQ + pP)) / 100
     }
   } else {
     // console.log(`Prior: ${prior.pQ}, QF:${this.QF}, Q:${this.Q}`)
+    pQ = Math.floor(100 * prior.pQ * this.QF / this.Q) / 100
+    pP = Math.floor(100 * prior.pP * this.PF / this.P) / 100
     return {
-      pQ: Math.floor(100 * prior.pQ * this.QF / this.Q) / 100,
-      pP: Math.floor(100 * prior.pP * this.PF / this.P) / 100
+      Q: Math.floor(100 * pQ / (pQ + pP)),
+      P: Math.floor(100 * pP / (pQ + pP)),
+      pQ: Math.floor(100 * pQ / (pQ + pP)) / 100,
+      pP: Math.floor(100 * pP / (pQ + pP)) / 100
     }
   }
 }
 
 export var TestRelationship = {
   create: function (relationship) {
-     var id = relationship.id
      var QS = relationship.QS
      var PS = relationship.PS
      var QF = relationship.QF
      var PF = relationship.PF
-     var result = {
-       id,
-       QS,
-       PS,
-       QF,
-       PF,
-       Q: QS + QF,
-       P: PS + PF,
-       S: QS + PS,
-       F: QF + PF,
-       pQ: (QS + QF) / 100,
-       pP: (PS + PF) / 100,
-       pS: (QS + PS) / 100,
-       pF: (QF + PF) / 100,
-       pQ_S: QS / (QS + PS),
-       pP_S: PS / (QS + PS),
-       pQ_F: QF / (QF + PF),
-       pP_F: PF / (QF + PF),
-       validate,
-       getAggregates,
-       getProbabilties,
-       getConditionalProbabilties,
-       getIntersections,
-       probabilityGiven
-      }
+     var result = Object.assign({
+      Q: QS + QF,
+      P: PS + PF,
+      S: QS + PS,
+      F: QF + PF,
+      pQ: (QS + QF) / 100,
+      pP: (PS + PF) / 100,
+      pS: (QS + PS) / 100,
+      pF: (QF + PF) / 100,
+      pQ_S: QS / (QS + PS),
+      pP_S: PS / (QS + PS),
+      pQ_F: QF / (QF + PF),
+      pP_F: PF / (QF + PF),
+      pQS: QS / 100,
+      pQF: QF / 100,
+      pPS: PS / 100,
+      pPF: PF / 100,
+      validate,
+      getAggregates,
+      getProbabilties,
+      getConditionalProbabilties,
+      getIntersections,
+      getIntersectionProbabilities,
+      probabilityGiven
+     }, relationship)
+
+    //  var result = {
+      //  id,
+      //  QS,
+      //  PS,
+      //  QF,
+      //  PF,
+      // }
       assert(result.validate(), 'Bayesian relationship is not valid as intersections dont sum to 100')
      return result
    }

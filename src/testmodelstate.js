@@ -24,6 +24,7 @@ function validate () {
  function updateGiven (testresult = { id: 1, 'S': true }) {
     var rel = this.relationships.find((r) =>
       r.id === testresult.id)
+    rel.evidence = testresult.S ? 'S' : 'F'
     this.posterior = rel.probabilityGiven(this.posterior, testresult)
     return this.posterior
  }

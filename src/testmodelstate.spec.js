@@ -29,15 +29,15 @@ describe('Given some factories', function () {
       id: 1,
       S: true,
       expect: {
-        pQ: 0.18,
-        pP: 0.22
+        pQ: 0.45,
+        pP: 0.55
       }
     }, {
       id: 2,
       S: true,
       expect: {
-        pQ: 0.14,
-        pP: 0.03
+        pQ: 0.78,
+        pP: 0.21
       }
     }]
   }]

@@ -19,8 +19,8 @@ describe('Given a relationship factory', function () {
       PF: 66
     }],
     expect: {
-      pQ: 0.14,
-      pP: 0.03
+      pQ: 0.78,
+      pP: 0.21
     }
   }]
   scenarios.forEach((scenario) => {

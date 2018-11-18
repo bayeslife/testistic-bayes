@@ -6,6 +6,12 @@ import { fail } from 'assert'
 describe('Given a relationship factory', function () {
   var relationshipFactory = Bayes.TestRelationship
 
+  describe('When an relationship is created with extra metaata', function () {
+    it('There meta data is available', function () {
+        var r = relationshipFactory.create({ foo: 'bar', QS: 25, QF: 25, PS: 25, PF: 25 })
+        assert.ok(r.foo)
+    })
+  })
   describe('When an invalid relationship is created', function () {
     it('There is an exception thrown', function () {
       try {
@@ -64,12 +70,12 @@ describe('Given a relationship factory', function () {
       },
       updates: {
         'S': {
-          pQ: 0.18,
-          pP: 0.22
+          pQ: 0.45,
+          pP: 0.55
         },
         'F': {
-          pQ: 0.02,
-          pP: 0.58
+          pQ: 0.03,
+          pP: 0.96
         }
       }
     }
