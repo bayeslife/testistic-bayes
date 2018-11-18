@@ -47,7 +47,7 @@ function validate () {
   }
  }
 
- function getProbabilties () {
+ function getProbabilities () {
   return {
     pQ: this.pQ,
     pP: this.pP,
@@ -95,7 +95,25 @@ function validate () {
       Q: Math.floor(100 * pQ / (pQ + pP)),
       P: Math.floor(100 * pP / (pQ + pP)),
       pQ: Math.floor(100 * pQ / (pQ + pP)) / 100,
-      pP: Math.floor(100 * pP / (pQ + pP)) / 100
+      pP: Math.floor(100 * pP / (pQ + pP)) / 100,
+      workings: {
+        prior: {
+          pQ: prior.pQ,
+          pP: prior.pP
+        },
+        likelihood: {
+          QS: this.QS,
+          Q: this.Q,
+          PS: this.PS,
+          P: this.P,
+          lQ: this.QS / this.Q,
+          lP: this.PS / this.P
+        },
+        posterior: {
+          pQ: Math.floor(100 * pQ) / 100,
+          pP: Math.floor(100 * pP) / 100
+        }
+      }
     }
   } else {
     // console.log(`Prior: ${prior.pQ}, QF:${this.QF}, Q:${this.Q}`)
@@ -105,42 +123,69 @@ function validate () {
       Q: Math.floor(100 * pQ / (pQ + pP)),
       P: Math.floor(100 * pP / (pQ + pP)),
       pQ: Math.floor(100 * pQ / (pQ + pP)) / 100,
-      pP: Math.floor(100 * pP / (pQ + pP)) / 100
+      pP: Math.floor(100 * pP / (pQ + pP)) / 100,
+      workings: {
+        prior: {
+          pQ: prior.pQ,
+          pP: prior.pP
+        },
+        likelihood: {
+          QF: this.QF,
+          Q: this.Q,
+          PF: this.PF,
+          P: this.P,
+          lQ: this.QF / this.Q,
+          lP: this.PF / this.P
+        },
+        posterior: {
+          pQ: Math.floor(100 * pQ) / 100,
+          pP: Math.floor(100 * pP) / 100
+        }
+      }
     }
   }
 }
 
 export var TestRelationship = {
   create: function (relationship) {
-     var QS = relationship.QS
-     var PS = relationship.PS
-     var QF = relationship.QF
-     var PF = relationship.PF
-     var result = Object.assign({
-      Q: QS + QF,
-      P: PS + PF,
-      S: QS + PS,
-      F: QF + PF,
-      pQ: (QS + QF) / 100,
-      pP: (PS + PF) / 100,
-      pS: (QS + PS) / 100,
-      pF: (QF + PF) / 100,
-      pQ_S: QS / (QS + PS),
-      pP_S: PS / (QS + PS),
-      pQ_F: QF / (QF + PF),
-      pP_F: PF / (QF + PF),
-      pQS: QS / 100,
-      pQF: QF / 100,
-      pPS: PS / 100,
-      pPF: PF / 100,
+     function reset () {
+      var QS = relationship.QS
+      var PS = relationship.PS
+      var QF = relationship.QF
+      var PF = relationship.PF
+      var result = Object.assign({
+        Q: QS + QF,
+        P: PS + PF,
+        S: QS + PS,
+        F: QF + PF,
+        pQ: (QS + QF) / 100,
+        pP: (PS + PF) / 100,
+        pS: (QS + PS) / 100,
+        pF: (QF + PF) / 100,
+        pQ_S: QS / (QS + PS),
+        pP_S: PS / (QS + PS),
+        pQ_F: QF / (QF + PF),
+        pP_F: PF / (QF + PF),
+        pQS: QS / 100,
+        pQF: QF / 100,
+        pPS: PS / 100,
+        pPF: PF / 100
+        }, relationship)
+      return result
+     }
+
+     var init = reset()
+
+     var result = Object.assign(init, {
       validate,
       getAggregates,
-      getProbabilties,
+      getProbabilities,
       getConditionalProbabilties,
       getIntersections,
       getIntersectionProbabilities,
-      probabilityGiven
-     }, relationship)
+      probabilityGiven,
+      reset
+     })
 
     //  var result = {
       //  id,

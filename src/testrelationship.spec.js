@@ -84,7 +84,7 @@ describe('Given a relationship factory', function () {
     describe('When a relationship is created', function () {
       var relationship = relationshipFactory.create(scenario.relationship)
       it(`Then probabilities are correct`, function () {
-        var derivedProbabilities = relationship.getProbabilties()
+        var derivedProbabilities = relationship.getProbabilities()
         assert.equal(scenario.expect.probabilities.pQ, derivedProbabilities.pQ)
         assert.equal(scenario.expect.probabilities.pP, derivedProbabilities.pP)
         assert.equal(scenario.expect.probabilities.pS, derivedProbabilities.pS)

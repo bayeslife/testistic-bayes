@@ -40,14 +40,24 @@ export var TestModelState = {
         pQ: prior.pQ,
         pP: prior.pP
     }
+
     var result = {
         prior,
         relationships,
         posterior,
         validate,
         getProbabilities,
-        updateGiven
+        updateGiven,
+        reset
     }
+    function reset () {
+      result.posterior.pQ = prior.pQ
+      result.posterior.pP = prior.pP
+      relationships.forEach((r) => {
+        delete r.evidence
+        r.reset()
+      })
+  }
     assert(result.validate(), 'All relationships should have the same aggregate')
     return result
    }
