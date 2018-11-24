@@ -1,9 +1,9 @@
 {
   "name": "testistic-bayes",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Phil <phil@xceptionale.com>",
   "license": "MIT",
-  "description": "Testistic Bayes Rules",
+  "description": "A module capturing bayes rule specifically in the case of a test results determining plausibility of service quality.",
   "main": "dist/lib.umd.js",
   "unpkg": "dist/lib.umd.js",
   "file": [
