@@ -71,7 +71,7 @@ You are then able to ask for the probabilities of service quality
 var p = state.getProbabilities()
 ```
 
-As test results become known we ask for this new information to be included in the consider
+As test results become known we ask for this new information to be included in the consideration of probability
 ```
 p = state.updateGiven({ 
     id: 'TestRelationship1',
